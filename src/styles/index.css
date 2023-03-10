@@ -1,4 +1,12 @@
+.box {
+    height: 450px;
+    width: 40%;
+    background-color: bisque;
+}
 
+ul li {
+    list-style: none;
+}
 /* 
 
     You can write your own styles here...
