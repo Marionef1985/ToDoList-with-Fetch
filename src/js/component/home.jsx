@@ -6,53 +6,49 @@ import rigoImage from "../../img/rigo-baby.jpg";
 //create your first component
 
 const Home = () => {
-  const [taskState, setTaskState] = useState([]);
-  const theTaskList = [
-    <ul>
-      <li>hola</li>
-      <li>tu</li>
-	  <li>tu</li>
-	  <li>tu</li>
-    </ul>,
-  ];
-
-  const addTask = () => {
-    let newTask = document.getElementById("list").value;
-    theTaskList.push(newTask);
-    setTaskState(theTaskList);
-    return false;
-  };
-
-  /*const addTask = () => {
-
-	<form id="CreateForm" action="/create" method="post">
-    <input type="text" name="foo" />
-</form>
-
-		let task = document.getElementById("#task");
-		
-}*/
-
+  const [inputValue, setInputValue] = useState("");
+  const [todos, setTodos] = useState([]);
   return (
-    <div className="text-center">
-      <h1 className="text-center mt-5">todos</h1>
-      <form id="taskListForm">
-        <label>
-          <input type="text" name="name" />
-        </label>
-      </form>
-      <div id="list">{taskState}</div>
-      <button
-        type="submit"
-        //form="taskListForm"
-        onClick={() => {
-          addTask();
-        }}
-      >
-        Add
-      </button>
+    <div className="container">
+      <h1>My Todos</h1>
+      <ul>
+        <li>
+          <input
+            type="text"
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
+            value={inputValue}
+            onKeyDown={(e) => {
+              console.log("key was pressed", e.key);
+              if (e.key === "Enter") {
+                console.log("Enter was pressed");
+                setTodos(todos.concat(inputValue));
+                setInputValue("");
+              }
+            }}
+            placeholder="What do you need to do?"
+          ></input>
+        </li>
+        {todos.map((item, index) => (
+          <li>
+            <div className="listItems">{item}</div>{" "}
+            <button
+              onClick={() => {
+                setTodos(
+                  todos.filter((t, currentIndex) => {
+                    index !== currentIndex
+                  })
+                );
+              }}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+        ))}
+      </ul>
+      <div>{todos.length} task</div>
     </div>
   );
 };
-
 export default Home;
